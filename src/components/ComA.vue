@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
-    <h1>{{msg}}-------{{title}}</h1>
+    以下是comA中的数据========
+    <h1>自己data中的数据：{{msg}}</h1>
+    <h1>从父页面传过来的数据：{{title}}</h1>
     <button @click="clickMe">clickMe show father's title,并且向父组件传值</button>
   </div>
 </template>
@@ -16,7 +18,7 @@ export default {
   methods: {
     clickMe: function() {
       console.log("title:" + this.title);
-      this.$emit("child-tell",'hello, i am from son');
+      this.$emit("child-tell", "hello, i am from son");
     }
   }
 };
