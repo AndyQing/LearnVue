@@ -16,9 +16,12 @@ export default {
   },
   props: ["title"],
   methods: {
+    show: function() {
+      console.log("子组件方法---");
+    },
     clickMe: function() {
       console.log("title:" + this.title);
-      this.$emit("child-tell", "hello, i am from son");
+      this.$emit("child-tell", "hello, i am from son," + this.msg);
     }
   }
 };
