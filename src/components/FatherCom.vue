@@ -19,6 +19,9 @@ export default {
     };
   },
   components: { ComA },
+  created() {
+    console.log(this.$route, this.$route.params.id); //用this.$route.params拿到传参
+  },
   mounted() {
     console.log("获取元素：", this.$refs.myh1.innerHTML); //获取dom元素
     //获取组件的引用
