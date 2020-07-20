@@ -3,15 +3,19 @@
     <!-- 跳转方式1：不推荐 -->
     <!-- <a href="#/avueDemo">跳转路由1</a> -->
 
-    <!-- 跳转方式2：推荐 -->
-    <!-- router-link 默认渲染为一个 a 标签,tag设置渲染成哪种标签 -->
-    <router-link to="/hello?id=1" tag="span">跳转路由1</router-link>
-    <router-link to="/fatherCom/2/qing" tag="span">跳转路由2</router-link>
+    <div style="height:40px;line-height:40px">
+      <!-- 跳转方式2：推荐 -->
+      <!-- router-link 默认渲染为一个 a 标签,tag设置渲染成哪种标签 -->
+      <router-link to="/hello?id=1" tag="span">跳转路由1</router-link>
+      <router-link to="/fatherCom/2/qing" tag="span">跳转路由2</router-link>
+    </div>
     <!-- <img src="./assets/logo.png"> -->
-    <transition mode="out-in">
-      <!-- 路由页面坑位 -->
-      <router-view></router-view>
-    </transition>
+    <div class="content">
+      <transition mode="out-in">
+        <!-- 路由页面坑位 -->
+        <router-view></router-view>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -22,14 +26,20 @@ export default {
 </script>
 
 <style>
+html,
+body {
+  height: 100%;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   height: 100%;
+}
+.content {
+  height: calc(100% - 40px);
 }
 .router-link-active,
 .myactive {

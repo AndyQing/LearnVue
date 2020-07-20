@@ -5,6 +5,7 @@ import FatherCom from '@/components/FatherCom'
 import AVueDemo from '@/components/AVueDemo'
 import VantDemo from '@/components/VantDemo'
 import TodoList from '@/components/TodoList'
+import ErrorPage from '@/components/ErrorPage'
 
 Vue.use(Router)
 
@@ -65,6 +66,10 @@ export default new Router({
     {
       path: '/todoList',
       component: TodoList
+    },
+    {
+      path: '/errorPage/:code',
+      component: ErrorPage
     },
   ]
 })

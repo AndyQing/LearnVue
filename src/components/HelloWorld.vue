@@ -6,6 +6,10 @@
     <router-link to="/hello/login">登录</router-link>
     <router-link to="/hello/register">注册</router-link>
     <router-view></router-view>
+    
+    <br />
+    <button @click="toerror(404)">跳转404</button>
+    <button @click="toerror(500)">跳转500</button>
   </div>
 </template>
 
@@ -19,8 +23,17 @@ export default {
   },
   created() {
     console.log(this.$route, this.$route.query.id); //用this.$route.query拿到传参
+  },
+  methods: {
+    toerror(code) {
+      this.$router.push("/errorPage/" + code);
+    }
   }
 };
+
+function toerror(code) {
+  this.$router.push("/errorPage/" + code);
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
