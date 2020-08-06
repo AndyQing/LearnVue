@@ -54,6 +54,12 @@
       <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
       <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
     </FormItem>
+
+    <div>
+      <Table border ref="selection" :columns="columns4" :data="data1"></Table>
+      <Button @click="handleSelectAll(true)">Set all selected</Button>
+      <Button @click="handleSelectAll(false)">Cancel all selected</Button>
+    </div>
   </Form>
 </template>
 <script>
@@ -68,33 +74,37 @@ export default {
         interest: [],
         date: "",
         time: "",
-        desc: ""
+        desc: "",
       },
       ruleValidate: {
         name: [
           {
             required: true,
             message: "The name cannot be empty",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         mail: [
           {
             required: true,
             message: "Mailbox cannot be empty",
-            trigger: "blur"
+            trigger: "blur",
           },
-          { type: "email", message: "Incorrect email format", trigger: "blur" }
+          { type: "email", message: "Incorrect email format", trigger: "blur" },
         ],
         city: [
           {
             required: true,
             message: "Please select the city",
-            trigger: "change"
-          }
+            trigger: "change",
+          },
         ],
         gender: [
-          { required: true, message: "Please select gender", trigger: "change" }
+          {
+            required: true,
+            message: "Please select gender",
+            trigger: "change",
+          },
         ],
         interest: [
           {
@@ -102,45 +112,92 @@ export default {
             type: "array",
             min: 1,
             message: "Choose at least one hobby",
-            trigger: "change"
+            trigger: "change",
           },
           {
             type: "array",
             max: 2,
             message: "Choose two hobbies at best",
-            trigger: "change"
-          }
+            trigger: "change",
+          },
         ],
         date: [
           {
             required: true,
             type: "date",
             message: "Please select the date",
-            trigger: "change"
-          }
+            trigger: "change",
+          },
         ],
         time: [
           {
             required: true,
             type: "string",
             message: "Please select time",
-            trigger: "change"
-          }
+            trigger: "change",
+          },
         ],
         desc: [
           {
             required: true,
             message: "Please enter a personal introduction",
-            trigger: "blur"
+            trigger: "blur",
           },
           {
             type: "string",
             min: 20,
             message: "Introduce no less than 20 words",
-            trigger: "blur"
-          }
-        ]
-      }
+            trigger: "blur",
+          },
+        ],
+      },
+      columns4: [
+        {
+          type: "selection",
+          width: 60,
+          align: "center",
+        },
+        {
+          title: "Name",
+          key: "name",
+
+        },
+        {
+          title: "Age",
+          key: "age",
+        },
+        {
+          title: "Address",
+          key: "address",
+        },
+      ],
+      data1: [
+        {
+          name: "John Brown",
+          age: 18,
+          address: "New York No. 1 Lake Park",
+          date: "2016-10-03",
+          _checked: true
+        },
+        {
+          name: "Jim Green",
+          age: 24,
+          address: "London No. 1 Lake Park",
+          date: "2016-10-01",
+        },
+        {
+          name: "Joe Black",
+          age: 30,
+          address: "Sydney No. 1 Lake Park",
+          date: "2016-10-02",
+        },
+        {
+          name: "Jon Snow",
+          age: 26,
+          address: "Ottawa No. 2 Lake Park",
+          date: "2016-10-04",
+        },
+      ],
     };
   },
   methods: {
@@ -149,7 +206,7 @@ export default {
       this.formValidate.name = value;
     },
     handleSubmit(name) {
-      this.$refs[name].validate(valid => {
+      this.$refs[name].validate((valid) => {
         console.log("valid---", this.formValidate);
         if (valid) {
           this.$Message.success("Success!");
@@ -160,7 +217,10 @@ export default {
     },
     handleReset(name) {
       this.$refs[name].resetFields();
-    }
-  }
+    },
+    handleSelectAll(status) {
+      this.$refs.selection.selectAll(status);
+    },
+  },
 };
 </script>
