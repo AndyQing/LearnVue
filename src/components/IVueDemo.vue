@@ -1,13 +1,28 @@
 <template>
-  <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+  <Form
+    ref="formValidate"
+    :model="formValidate"
+    :rules="ruleValidate"
+    :label-width="80"
+  >
     <FormItem label="Name" prop="name">
       <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
     </FormItem>
+    <FormItem label="证件号" prop="idcode">
+      <Input v-model="formValidate.idcode"></Input>
+    </FormItem>
     <FormItem label="E-mail" prop="mail">
-      <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
+      <Input
+        v-model="formValidate.mail"
+        placeholder="Enter your e-mail"
+      ></Input>
     </FormItem>
     <FormItem label="City" prop="city">
-      <Select v-model="formValidate.city" placeholder="Select your city" @on-change="selectCity">
+      <Select
+        v-model="formValidate.city"
+        placeholder="Select your city"
+        @on-change="selectCity"
+      >
         <Option value="1">New York</Option>
         <Option value="2">London</Option>
         <Option value="3">Sydney</Option>
@@ -17,13 +32,21 @@
       <Row>
         <Col span="11">
           <FormItem prop="date">
-            <DatePicker type="date" placeholder="Select date" v-model="formValidate.date"></DatePicker>
+            <DatePicker
+              type="date"
+              placeholder="Select date"
+              v-model="formValidate.date"
+            ></DatePicker>
           </FormItem>
         </Col>
         <Col span="2" style="text-align: center">-</Col>
         <Col span="11">
           <FormItem prop="time">
-            <TimePicker type="time" placeholder="Select time" v-model="formValidate.time"></TimePicker>
+            <TimePicker
+              type="time"
+              placeholder="Select time"
+              v-model="formValidate.time"
+            ></TimePicker>
           </FormItem>
         </Col>
       </Row>
@@ -46,17 +69,25 @@
       <Input
         v-model="formValidate.desc"
         type="textarea"
-        :autosize="{minRows: 2,maxRows: 5}"
+        :autosize="{ minRows: 2, maxRows: 5 }"
         placeholder="Enter something..."
       ></Input>
     </FormItem>
     <FormItem>
-      <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-      <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+      <Button type="primary" @click="handleSubmit('formValidate')"
+        >Submit</Button
+      >
+      <Button @click="handleReset('formValidate')" style="margin-left: 8px"
+        >Reset</Button
+      >
     </FormItem>
 
     <div>
-      <Table border ref="selection" :columns="columns4" :data="data1"></Table>
+      <Table border ref="selection" :columns="columns4" :data="data1">
+        <template slot-scope="{ row, index }" slot="operate">
+          <Button v-if="row.age > 20">删除</Button>
+        </template>
+      </Table>
       <Button @click="handleSelectAll(true)">Set all selected</Button>
       <Button @click="handleSelectAll(false)">Cancel all selected</Button>
     </div>
@@ -69,12 +100,13 @@ export default {
       formValidate: {
         name: "",
         mail: "",
-        city: "",
+        city: "1",
         gender: "",
         interest: [],
         date: "",
         time: "",
         desc: "",
+        idcode: "",
       },
       ruleValidate: {
         name: [
@@ -160,7 +192,6 @@ export default {
         {
           title: "Name",
           key: "name",
-
         },
         {
           title: "Age",
@@ -170,6 +201,10 @@ export default {
           title: "Address",
           key: "address",
         },
+        {
+          title: "操作",
+          slot: "operate",
+        },
       ],
       data1: [
         {
@@ -177,7 +212,7 @@ export default {
           age: 18,
           address: "New York No. 1 Lake Park",
           date: "2016-10-03",
-          _checked: true
+          _checked: true,
         },
         {
           name: "Jim Green",
