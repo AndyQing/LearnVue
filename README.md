@@ -12,4 +12,6 @@ npm install
 npm run dev
 
 # step3：访问 localhost:8080
+
+test
 ```
