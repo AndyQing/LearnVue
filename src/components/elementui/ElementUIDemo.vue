@@ -1,5 +1,33 @@
 <template>
   <div class="block">
+    <div>
+      <el-checkbox
+        :indeterminate="isIndeterminate"
+        v-model="checkAll"
+        @change="handleCheckAllChange"
+        >全选</el-checkbox
+      >
+      <div style="margin: 15px 0"></div>
+      <el-checkbox-group
+        v-model="checkedCities"
+        @change="handleCheckedCitiesChange"
+      >
+        <el-checkbox v-for="city in cities" :label="city" :key="city"
+          >{{ city }}---<el-button @click="cancel(city)"
+            >取消</el-button
+          ></el-checkbox
+        >
+      </el-checkbox-group>
+    </div>
+    <!-- value-format="yyyy-MM-dd" -->
+    <el-date-picker
+      v-model="dateValue"
+      type="date"
+      @change="dateChange"
+      placeholder="选择日期"
+    >
+    </el-date-picker>
+
     <li v-for="(item, index) in datalist">{{ index }}-{{ item.good.price }}</li>
     <!-- vue实现点击列表中的哪一项，哪一项就变颜色: -->
     <ul>
@@ -45,6 +73,16 @@
       </el-option>
     </el-select>
 
+    <el-select class="date" v-model="value2" size="mini" placeholder="请选择">
+      <el-option
+        v-for="item in 59"
+        :key="item"
+        :label="item < 10 ? '0' + item : item"
+        :value="item"
+      >
+      </el-option>
+    </el-select>
+
     <el-cascader
       v-model="value"
       :options="options"
@@ -73,9 +111,16 @@
 </template>
 
 <script>
+const cityOptions = ["上海", "北京", "广州", "深圳"];
 export default {
   data() {
     return {
+      checkAll: false,
+      checkedCities: ["上海", "北京"],
+      cities: cityOptions,
+      isIndeterminate: true,
+
+      dateValue: "",
       mark: 0,
       movices: ["复仇者联盟", "钢铁侠", "美国队长", "小黑历险记"],
       datalist: [{ id: 16, good: { price: 25 } }],
@@ -218,6 +263,26 @@ export default {
     });
   },
   methods: {
+    handleCheckAllChange(val) {
+      console.log("val---", val);
+      this.checkedCities = val ? cityOptions : [];
+      this.isIndeterminate = false;
+    },
+    handleCheckedCitiesChange(value) {
+      console.log("value-", value);
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === this.cities.length;
+      this.isIndeterminate =
+        checkedCount > 0 && checkedCount < this.cities.length;
+    },
+    cancel(city) {
+      this.checkedCities = this.checkedCities.filter((item) => item != city);
+      let checkedCount = this.checkedCities.length;
+      this.checkAll = checkedCount === this.cities.length;
+      this.isIndeterminate =
+        checkedCount > 0 && checkedCount < this.cities.length;
+      console.log("checkedCount---", checkedCount, this.isIndeterminate);
+    },
     getcolor: function (index) {
       if (index == this.mark) {
         // this.mark = -1; // if判断，实现点击一项时变色，再次点击，取消变色
@@ -227,6 +292,22 @@ export default {
     },
     handleChange(value) {
       console.log(value);
+    },
+    dateChange(value) {
+      console.log(value, this.dateToString(value));
+    },
+    dateToString(date) {
+      var year = date.getFullYear();
+      var month = (date.getMonth() + 1).toString();
+      var day = date.getDate().toString();
+      if (month.length == 1) {
+        month = "0" + month;
+      }
+      if (day.length == 1) {
+        day = "0" + day;
+      }
+      var dateTime = year + "-" + month + "-" + day;
+      return dateTime;
     },
     vChange(val) {
       console.log("val0----", val);

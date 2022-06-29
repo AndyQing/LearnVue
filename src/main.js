@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 // import App from './APP'
-import App from './components/FormDemo'
+import App from './components/elementui/ElementUIDemo'//用于测试的页面
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
