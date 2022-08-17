@@ -11,5 +11,7 @@ npm install
 # step2：
 npm run dev
 
-# step3：访问 localhost:8080
+# step3：
+访问 localhost:8080
+
 ```
