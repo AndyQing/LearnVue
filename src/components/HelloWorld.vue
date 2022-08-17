@@ -3,10 +3,13 @@
     <h1>{{ msg }}</h1>
 
     <p>路由的嵌套---------</p>
+    <button @click="back">后退</button>
+    <button @click="forward">前进</button><br/>
+    <!-- <router-link replace是替换当前的记录 -->
     <router-link to="/hello/login">登录</router-link>
     <router-link to="/hello/register">注册</router-link>
     <router-view></router-view>
-    
+
     <br />
     <button @click="toerror(404)">跳转404</button>
     <button @click="toerror(500)">跳转500</button>
@@ -18,7 +21,7 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      msg: "Welcome to Your Vue.js App",
     };
   },
   created() {
@@ -26,9 +29,17 @@ export default {
   },
   methods: {
     toerror(code) {
-      this.$router.push("/errorPage/" + code);
-    }
-  }
+      // this.$router.push("/errorPage/" + code);
+      this.$router.push({ path: "/errorPage/" + code });
+    },
+    back() {
+      // this.$router.back();
+      this.$router.go(-1);
+    },
+    forward() {
+      this.$router.forward();
+    },
+  },
 };
 
 function toerror(code) {

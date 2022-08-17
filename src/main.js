@@ -1,6 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
+import Vue from 'vue'//vue3中这样写就会报错
 // import App from './APP'
 import App from './components/elementui/ElementUIDemo'//用于测试的页面
 import ElementUI from 'element-ui'
@@ -19,11 +19,13 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+const vm = new Vue({
   el: '#app',
   router,
   components: { App },
   template: '<App/>',
+  //上面两行可以用下面一行代替
+  // render:h=>h(App),
   watch: {
     '$route.path': function (newVal, oldVal) {
       // console.log(newVal + '----' + oldVal);
@@ -36,3 +38,5 @@ new Vue({
     },
   }
 })
+//如果上面不写el，可以用下面一行代码代替
+// vm.$mount('#app')

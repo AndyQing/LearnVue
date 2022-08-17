@@ -6,6 +6,7 @@ import AVueDemo from '@/components/AVueDemo'
 import VantDemo from '@/components/VantDemo'
 import TodoList from '@/components/TodoList'
 import ErrorPage from '@/components/ErrorPage'
+import Login from '@/components/Login'
 
 Vue.use(Router)
 
@@ -16,7 +17,9 @@ var register = {
   template: '<h3 >注册组件---</h3>',
 }
 
-export default new Router({
+const router = new Router({
+  mode: 'hash',//默认是hash模式，网址路径上带有“#”，其后面的东西不会传给服务器
+  // mode:"history",//需要解决刷新页面404的问题，需要后端人员解决。
   linkActiveClass: 'myactive',//默认选中样式是："router-link-active"
   routes: [
     //不推荐直接用根路径直接指向一个组件，用户可能会感觉到歧义，建议用redirect
@@ -53,7 +56,19 @@ export default new Router({
     {
       path: '/fatherCom/:id/:name',
       name: 'FatherCom',
-      component: FatherCom
+      component: FatherCom,
+      // props: { id: "111" },
+      props: true,//这种只适用于访问‘/fatherCom/1/2’的方式，会把params参数通过props传给组件
+      // props() {
+      //   return { id: '222' }
+      // },
+      // props($route) {//这种只适用于访问‘/fatherCom?id=1’的方式
+      //   return { id: $route.query.id }
+      // }
+    },
+    {
+      path: '/login',
+      component: Login
     },
     {
       path: '/avueDemo',
@@ -73,3 +88,10 @@ export default new Router({
     },
   ]
 })
+router.beforeEach((to, from, next) => {
+  console.log('beforeEach---', to, from)
+  if (localStorage.getItem('token1')) {
+    next()
+  }
+})
+export default router
